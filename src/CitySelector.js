@@ -2,20 +2,15 @@ import React, {Component} from 'react';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
-const sitys = [
+const citys = [
   {value: 0, name: 'Москва'},
   {value: 1, name: 'Санкт-Петербург'},
   {value: 2, name: 'Калуга'},
 ];
 
-export default class SitySelector extends Component {
-  state = {
-    values: this.props.sitys.list,
-  };
-
-  handleChange = (event, index, values) => {
-    this.props.sitys.update(values, '&area');
-    this.setState({values})
+export default class CitySelector extends Component {
+  constructor(props) {
+    super(props);
   };
 
   selectionRenderer = (values) => {
@@ -24,20 +19,20 @@ export default class SitySelector extends Component {
       case 0:
         return '';
       case 1:
-        return sitys[values[0]].name;
+        return citys[values[0]].name;
       default:
         return `Выбрано ${values.length} города`;
     }
   }
 
-  menuItems(sitys) {
-    return sitys.map((sity) => (
+  menuItems(citys) {
+    return citys.map((city) => (
       <MenuItem
-        key={sity.value}
+        key={city.value}
         insetChildren={true}
-        checked={this.state.values.includes(sity.value)}
-        value={sity.value}
-        primaryText={sity.name}
+        checked={this.props.citysSelectedList.includes(city.value)}
+        value={city.value}
+        primaryText={city.name}
       />
     ));
   }
@@ -47,11 +42,11 @@ export default class SitySelector extends Component {
       <SelectField
         multiple={true}
         hintText="Выбор города"
-        value={this.state.values}
-        onChange={this.handleChange}
+        value={this.props.citysSelectedList}
+        onChange={this.props.updateCitysSelectedList}
         selectionRenderer={this.selectionRenderer}
       >
-        {this.menuItems(sitys)}
+        {this.menuItems(citys)}
       </SelectField>
     );
   }

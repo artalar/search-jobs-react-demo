@@ -35,7 +35,7 @@ export default class EmptySearch extends React.Component {
           modal={true}
           open={this.state.open}
         >
-          Пожауйста, повторите поиск с другими параметрами
+          Пожалуйста, повторите поиск с другими параметрами
         </Dialog>
       </div>
     );
