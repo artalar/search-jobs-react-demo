@@ -14,7 +14,7 @@ export default class SitySelector extends Component {
   };
 
   handleChange = (event, index, values) => {
-    this.props.sitys.update(values);
+    this.props.sitys.update(values, '&area');
     this.setState({values})
   };
 

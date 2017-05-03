@@ -12,16 +12,22 @@ export default class App extends Component {
     state = {
         sitys: {
             list: [0,1,2],
-            update: this.sitySearch
+            update: {}
+        },
+        salary: {
+            status: true,
+            update: {}
         }
     };
-    sitySearch = val => {};
     render(){
         return (
             <MuiThemeProvider>
                 <div>
-                    <ToolBar sitys={this.state.sitys} sitySearch={this.sitySearch}/>
-                    <VacancyList sitys={this.state.sitys} updateSitys={this.state.updateSitys}/>
+                    <ToolBar sitys={this.state.sitys} salary={this.state.salary}/>
+                    <VacancyList
+                        sitys={this.state.sitys}
+                        salary={this.state.salary}
+                    />
                 </div>
             </MuiThemeProvider>
         )

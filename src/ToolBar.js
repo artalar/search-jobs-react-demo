@@ -1,4 +1,5 @@
 import React from 'react';
+import Checkbox from 'material-ui/Checkbox';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
@@ -13,13 +14,16 @@ export default class ToolbarExamplesSimple extends React.Component {
 
   constructor(props) {
     super(props);
+    this.salaryStatusUpdate.bind(this);
     this.state = {
-      value: 3,
+      salaryStatus: this.props.salary.status,
     };
   }
 
-  handleChange = (event, index, value) => this.setState({value});
-
+  salaryStatusUpdate = (event, index, value) => {
+    this.setState({salaryStatus: value});
+    this.props.salary.update(value, '&only_with_salary')
+  }
   render() {
     return (
       <Toolbar>
@@ -29,7 +33,7 @@ export default class ToolbarExamplesSimple extends React.Component {
         <ToolbarGroup >
           <SitySelector sitys={this.props.sitys} sitySearch={this.props.sitySearch}/>
           <ToolbarSeparator />
-          <ToolbarTitle text=" " />
+          <Checkbox label="С указанием з.п." checked={this.state.salaryStatus} onCheck={this.salaryStatusUpdate}/>
         </ToolbarGroup>
       </Toolbar>
     );
