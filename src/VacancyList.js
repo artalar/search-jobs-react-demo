@@ -86,14 +86,14 @@ export default class VacancyList extends React.Component {
     };
     render = function() {
         if (this.state.loadBar) return (
-            <div className='LoadBar'>
+            <div className='LoadBar' style={{texAlign: center}}>
                 <br />
                 <CircularProgress size={100} thickness={10}/>
             </div>
         )
         if(!this.state.loadVacancy.length){
             return (
-                <div className="VacancyList" style={{textAlign: 'center', color: '#AAA'}}>
+                <div className="VacancyList" style={{textAlign: 'center', color: '#AAA', width: '50vw', margin: '0 auto'}}>
                     <EmptySearch state={true}/>
                     <br/>
                     Ничего не найдено
@@ -101,7 +101,7 @@ export default class VacancyList extends React.Component {
             )
         }
         return (
-            <div className="VacancyList">
+            <div className="VacancyList" style={{width: '50vw', margin: '0 auto'}}>
                 <SearchField hintText="Поиск по вакансиям" fullWidth={true} onChange={this.handleSearch}/>
                 <div>
                     {
