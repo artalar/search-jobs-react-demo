@@ -86,7 +86,7 @@ export default class VacancyList extends React.Component {
     };
     render = function() {
         if (this.state.loadBar) return (
-            <div className='LoadBar' style={{texAlign: center}}>
+            <div className='LoadBar' style={{texAlign: 'center'}}>
                 <br />
                 <CircularProgress size={100} thickness={10}/>
             </div>
