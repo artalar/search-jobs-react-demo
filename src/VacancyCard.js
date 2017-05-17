@@ -46,6 +46,8 @@ export default class VacancyCard extends React.Component {
   };
 
   render() {
+
+	  const { employerProfile, } = this.state.data
     return (
       <Card>
         <a href={this.state.data.employerProfile}><CardHeader
