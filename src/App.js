@@ -36,7 +36,7 @@ export default class App extends Component {
         return result === null ? true : result //default value
     }
 
-    updateCitysSelectedList = (event, index, list) => {
+    updateCitysSelectedList (event, index, list) {
         localStorage.setItem('citysSelectedList', JSON.stringify(list));
         this.setState({citysSelectedList: list})
         let remoteSearch =  this.state.remoteSearch.do;
