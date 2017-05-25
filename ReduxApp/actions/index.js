@@ -1,3 +1,10 @@
+export const CHANGE_SALARY_REQUIRE_STATUS = 'CHANGE_SALARY_REQUIRE_STATUS';
+export const CHANGE_CITYS_SELECTED_LIST = 'CHANGE_CITYS_SELECTED_LIST';
+export const LIKE_VACANCY = 'LIKE_VACANCY';
+export const END_REMOTE_SEARCH = 'END_REMOTE_SEARCH';
+export const START_REMOTE_SEARCH = 'START_REMOTE_SEARCH';
+export const UPDATE_DISPLAYED_VACANCIES = 'UPDATE_DISPLAYED_VACANCIES';
+
 export const localSearch = event => {
 	return {
 		type: 'SEARCH_LOCALLY',
@@ -5,18 +12,32 @@ export const localSearch = event => {
 	}
 }
 
-
-function networkReq() { //activate loadbar
+export const changeSalaryReq = () => {
 	return {
-		type: 'SEND_NETWORK_REQUEST'
+		type: CHANGE_SALARY_REQUIRE_STATUS
 	}
 }
 
 
-function networkResp(json) {
+export const networkReq = () => { //activate loadbar
 	return {
-		type: 'PARSE_NETWORK_RESPONSE',
+		type: 'START_REMOTE_SEARCH'
+	}
+}
+
+
+export const networkResp = json => {
+	return {
+		type: 'END_REMOTE_SEARCH',
 		json
+	}
+}
+
+
+export const networkErr = json => {
+	return {
+		type: 'END_REMOTE_SEARCH',
+		json: []
 	}
 }
 
@@ -29,6 +50,6 @@ export const remoteSearch = url => {
 		return fetch(url)
 			.then(resp => resp.json())
 			.then(json => dispatch(networkResp(json)))
-			.catch(error => dispatch(networkResp(error)))
+			.catch(error => dispatch(networkErr()))
 	}
 }
