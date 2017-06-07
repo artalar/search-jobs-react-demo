@@ -18,6 +18,13 @@ export const changeSalaryReq = () => {
 	}
 }
 
+export const selectCity = (value) => {
+
+	return {
+		type: CHANGE_CITYS_SELECTED_LIST,
+		selectSityId: value
+	}
+}
 
 export const networkReq = () => { //activate loadbar
 	return {

@@ -1,18 +1,72 @@
-import { combineReducers } from 'redux';
-import {
-	CHANGE_SALARY_REQUIRE_STATUS,
-	CHANGE_CITYS_SELECTED_LIST,
-	LIKE_VACANCY, END_REMOTE_SEARCH,
-	START_REMOTE_SEARCH,
-	UPDATE_DISPLAYED_VACANCIES
-} from '../actions';
+import { combineReducers }					from 'redux';
 
-const webRequest = (
-	state = {
+import { WEB_REQ_STATUS }					from '../constants';
+import { CHANGE_SALARY_REQUIRE_STATUS }		from '../actions';
+import { CHANGE_CITYS_SELECTED_LIST }		from '../actions';
+import { LIKE_VACANCY }						from '../actions';
+import { END_REMOTE_SEARCH }				from '../actions';
+import { START_REMOTE_SEARCH }				from '../actions';
+import { UPDATE_DISPLAYED_VACANCIES }		from '../actions';
+
+
+const DefState = {
+	webRequest: {
 		URL: 'https://api.hh.ru/vacancies?specialization=1.221&per_page=50',
 		SalaryIsRequired: true,
-		citysSelectedList: [0,1,2]
+		citiesList: [
+			{
+				id: 1,
+				displayedName: "Москва",
+				selectedStatus: false
+			},
+			{
+				id: 2,
+				displayedName: "Санкт-Петербург",
+				selectedStatus: false
+			},
+			{
+				id: 43,
+				displayedName: "Калуга",
+				selectedStatus: true
+			},
+		]
 	},
+	likes: {},
+	loadBar: true,
+	vacanciesList: {
+		loadVacancies: [],
+		displayedVacancies: []
+	}
+}
+
+//new architecture
+export const DefaultState = {
+	filters: {
+		cities: {
+			list: [
+				{
+					id: 1,
+					displayedName: "Москва",
+					selectedStatus: false
+				},
+				{
+					id: 2,
+					displayedName: "Санкт-Петербург",
+					selectedStatus: false
+				},
+				{
+					id: 43,
+					displayedName: "Калуга",
+					selectedStatus: true
+				},
+			],
+			reqStatus: WEB_REQ_STATUS.IS_LOADING
+		}
+	}
+}
+
+const webRequest = (
+	state = DefState.webRequest,
 	action
 ) => {
 	switch (action.type) {
@@ -25,14 +79,21 @@ const webRequest = (
 		case CHANGE_CITYS_SELECTED_LIST:
 		return {
 			...state,
-			citysSelectedList: action.value
+			citiesList: state.citiesList.map((item) => {
+				return item.id !== action.selectSityId
+					? item
+					: {
+						...item,
+						selectedStatus: !item.selectedStatus
+					}
+			})
 		}
 		default:
 			return state;
 	}
 }
 
-const likes = (state = {}, action) => {
+const likes = (state = DefState.likes, action) => {
 	switch (action.type) {
 		case LIKE_VACANCY:
 			return {
@@ -44,7 +105,7 @@ const likes = (state = {}, action) => {
 	}
 }
 
-const loadBar = (state=true, action) => {
+const loadBar = (state=DefState.loadBar, action) => {
 	switch (action.type) {
 		case START_REMOTE_SEARCH:
 			return true;
@@ -55,10 +116,7 @@ const loadBar = (state=true, action) => {
 	}
 }
 const vacanciesList = (
-	state = {
-		loadVacancies: [],
-		displayedVacancies: []
-	},
+	state = DefState.vacanciesList,
 	action
 ) => {
 	switch (action.type) {
