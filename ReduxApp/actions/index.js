@@ -4,6 +4,8 @@ export const LIKE_VACANCY = 'LIKE_VACANCY';
 export const END_REMOTE_SEARCH = 'END_REMOTE_SEARCH';
 export const START_REMOTE_SEARCH = 'START_REMOTE_SEARCH';
 export const UPDATE_DISPLAYED_VACANCIES = 'UPDATE_DISPLAYED_VACANCIES';
+export const REQUEST_CITIES_LIST = 'REQUEST_CITIES_LIST';
+export const RESPONSE_CITIES_LIST = 'RESPONSE_CITIES_LIST';
 
 export const localSearch = event => {
 	return {
@@ -18,11 +20,23 @@ export const changeSalaryReq = () => {
 	}
 }
 
-export const selectCity = (value) => {
-
+export const selectCity = selectCityId => {
 	return {
 		type: CHANGE_CITYS_SELECTED_LIST,
-		selectSityId: value
+		selectCityId
+	}
+}
+
+export const requesteCitiesList = () => {
+	return {
+		type: REQUEST_CITIES_LIST
+	}
+}
+
+export const responseCitiesList = list => {
+	return {
+		type: RESPONSE_CITIES_LIST,
+		list
 	}
 }
 

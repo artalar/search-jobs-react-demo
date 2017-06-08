@@ -46,7 +46,7 @@ export default class DropDownMenu extends Component {
 		<div>
 			<TextField
 				hintText="Поиск..."
-				floatingLabelText={`${this.props.label}: ${count}`}
+				floatingLabelText={`${this.props.label} выбранно: ${count}`}
 				onClick={this.OnOpenPopover}
 				onChange={this.props.onSearch}
 				// Disable Popover autofocus
@@ -63,7 +63,7 @@ export default class DropDownMenu extends Component {
 					{items.map((item) => (
 						<MenuItem
 							key={item.id}
-							primaryText={item.displayedName}
+							primaryText={item.name}
 							style={item.selectedStatus ? {color: "#00bdd5"} : {}}
 							onTouchTap={() => this.props.onItemSelect(item.id)}
 						/>

@@ -7,6 +7,7 @@ import { LIKE_VACANCY }						from '../actions';
 import { END_REMOTE_SEARCH }				from '../actions';
 import { START_REMOTE_SEARCH }				from '../actions';
 import { UPDATE_DISPLAYED_VACANCIES }		from '../actions';
+import { RESPONSE_CITIES_LIST }				from '../actions';
 
 
 const DefState = {
@@ -16,17 +17,17 @@ const DefState = {
 		citiesList: [
 			{
 				id: 1,
-				displayedName: "Москва",
+				name: "Москва",
 				selectedStatus: false
 			},
 			{
 				id: 2,
-				displayedName: "Санкт-Петербург",
+				name: "Санкт-Петербург",
 				selectedStatus: false
 			},
 			{
 				id: 43,
-				displayedName: "Калуга",
+				name: "Калуга",
 				selectedStatus: true
 			},
 		]
@@ -46,17 +47,17 @@ export const DefaultState = {
 			list: [
 				{
 					id: 1,
-					displayedName: "Москва",
+					name: "Москва",
 					selectedStatus: false
 				},
 				{
 					id: 2,
-					displayedName: "Санкт-Петербург",
+					name: "Санкт-Петербург",
 					selectedStatus: false
 				},
 				{
 					id: 43,
-					displayedName: "Калуга",
+					name: "Калуга",
 					selectedStatus: true
 				},
 			],
@@ -80,13 +81,18 @@ const webRequest = (
 		return {
 			...state,
 			citiesList: state.citiesList.map((item) => {
-				return item.id !== action.selectSityId
+				return item.id !== action.selectCityId
 					? item
 					: {
 						...item,
 						selectedStatus: !item.selectedStatus
 					}
 			})
+		}
+		case RESPONSE_CITIES_LIST:
+		return {
+			...state,
+			citiesList: [...action.list]
 		}
 		default:
 			return state;
