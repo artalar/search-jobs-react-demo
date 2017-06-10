@@ -3,8 +3,9 @@ import	{Component}							from 'react';
 import PropTypes							from 'prop-types'
 import { connect }							from 'react-redux'
 
+import Filters								from './Filters.jsx'
+
 import { changeSalaryReq }					from '../actions'
-import HeaderToolBar						from '../containers/HeaderToolBar.jsx'
 
 
 class App extends Component {
@@ -12,8 +13,9 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<HeaderToolBar
-					itemsList={this.props.itemsList}
+				<Filters
+					citiesList={this.props.citiesList}
+					keyWordsList={this.props.keyWordsList}
 					salaryIsRequired={this.props.salaryIsRequired}
 					dispatch={this.props.dispatch}
 				/>
@@ -23,14 +25,15 @@ class App extends Component {
 }
 
 App.propTypes = {
-	itemsList: PropTypes.array.isRequired,
+	citiesList: PropTypes.array.isRequired,
 	salaryIsRequired: PropTypes.bool.isRequired,
 	dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
 	return {
-		itemsList: state.filters.cities.list,
+		citiesList: state.filters.cities.list,
+		keyWordsList: state.filters.keyWords.list,
 		salaryIsRequired: state.filters.salaryIsRequired
 	}
 }

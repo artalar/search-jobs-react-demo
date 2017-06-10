@@ -1,7 +1,12 @@
 export const CHANGE_SALARY_REQUIRE_STATUS = 'CHANGE_SALARY_REQUIRE_STATUS';
+
 export const TOGGLE_CITY_SELECTION = 'TOGGLE_CITY_SELECTION';
 export const REQUEST_CITIES_LIST = 'REQUEST_CITIES_LIST';
 export const RESPONSE_CITIES_LIST = 'RESPONSE_CITIES_LIST';
+
+export const TOGGLE_KEY_WORD_SELECTION = 'TOGGLE_KEY_WORD_SELECTION';
+export const REQUEST_KEY_WORDS_LIST = 'REQUEST_KEY_WORDS_LIST';
+export const RESPONSE_KEY_WORDS_LIST = 'RESPONSE_KEY_WORDS_LIST';
 
 
 export const changeSalaryReqStatus = () => {
@@ -17,13 +22,13 @@ export const selectCity = selectCityId => {
 	}
 }
 
-export const requestCitiesList = () => {
+const requestCitiesList = () => {
 	return {
 		type: REQUEST_CITIES_LIST
 	}
 }
 
-export const responseCitiesList = response => {
+const responseCitiesList = response => {
 	return {
 		type: RESPONSE_CITIES_LIST,
 		response
@@ -48,7 +53,6 @@ export const fetchCitiesList = str => {
 			})
 	}
 }
-
 
 
 // OLD

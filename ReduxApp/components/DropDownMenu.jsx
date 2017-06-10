@@ -43,7 +43,7 @@ export default class DropDownMenu extends Component {
 					, 0
 				);
 		return (
-		<div style={{margin: "0% 0% 5%"}}>
+		<div>
 			<TextField
 				hintText="Поиск..."
 				floatingLabelText={`${this.props.label}, выбранно: ${count}`}
@@ -55,11 +55,12 @@ export default class DropDownMenu extends Component {
 			<Popover
 				open={this.state.open}
 				anchorEl={this.state.anchorEl}
-				anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+				anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
 				targetOrigin={{horizontal: 'left', vertical: 'top'}}
 				onRequestClose={this.onPopoverClose}
+				style={{minWidth: '350px'}}
 			>
-				<Menu>
+				<Menu maxHeight="600">
 					{
 						!items.length
 							? <MenuItem primaryText="Ничего не найдено" />
