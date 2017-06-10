@@ -14,6 +14,7 @@ class App extends Component {
 			<div>
 				<HeaderToolBar
 					itemsList={this.props.itemsList}
+					salaryIsRequired={this.props.salaryIsRequired}
 					dispatch={this.props.dispatch}
 				/>
 			</div>
@@ -22,29 +23,16 @@ class App extends Component {
 }
 
 App.propTypes = {
-	URL: PropTypes.string.isRequired,
-	dispatch: PropTypes.func.isRequired,
-
+	itemsList: PropTypes.array.isRequired,
+	salaryIsRequired: PropTypes.bool.isRequired,
+	dispatch: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
-	const { webRequest } = state;
-	const URL = `${webRequest.URL}&${webRequest.SalaryIsRequired}`;
-	const itemsList = webRequest.citiesList;
-	const value = webRequest.value;
-
 	return {
-		URL,
-		itemsList,
-		value
+		itemsList: state.filters.cities.list,
+		salaryIsRequired: state.filters.salaryIsRequired
 	}
 }
-
-/*const mapDispatchToProps = (dispatch) => {
-return {
-	onTodoClick: (id) => {
-	dispatch(toggleTodo(id))
-	}
-}*/
 
 export default connect(mapStateToProps)(App)

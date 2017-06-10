@@ -1,5 +1,5 @@
 import	React								from 'react';
-import	{Component}							from 'react';
+import { Component }						from 'react';
 import { render }							from 'react-dom'
 import { createStore }						from 'redux'
 import { compose }							from 'redux'

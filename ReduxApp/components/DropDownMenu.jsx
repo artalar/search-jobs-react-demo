@@ -33,24 +33,24 @@ export default class DropDownMenu extends Component {
 	};
 
 	onSearch = event => {
-		console.log(event.target.value)
+		this.props.onSearch(event.target.value)
 	}
 
 	render() {
 		const	items = this.props.itemsList,
 				count = items.reduce(
-					(acc, item) => item.selectedStatus ? ++acc : acc
-					, 0)
-
+					( acc, item ) => item.selectedStatus ? ++acc : acc
+					, 0
+				);
 		return (
-		<div>
+		<div style={{margin: "0% 0% 5%"}}>
 			<TextField
 				hintText="Поиск..."
-				floatingLabelText={`${this.props.label} выбранно: ${count}`}
+				floatingLabelText={`${this.props.label}, выбранно: ${count}`}
 				onClick={this.OnOpenPopover}
-				onChange={this.props.onSearch}
-				// Disable Popover autofocus
-				onBlur={event=>this.state.open && event.target.focus()}
+				onChange={this.onSearch}
+				// Disable Popover autofocus when opening
+				onBlur={ event => this.state.open && event.target.focus() }
 			/>
 			<Popover
 				open={this.state.open}
@@ -60,14 +60,18 @@ export default class DropDownMenu extends Component {
 				onRequestClose={this.onPopoverClose}
 			>
 				<Menu>
-					{items.map((item) => (
-						<MenuItem
-							key={item.id}
-							primaryText={item.name}
-							style={item.selectedStatus ? {color: "#00bdd5"} : {}}
-							onTouchTap={() => this.props.onItemSelect(item.id)}
-						/>
-					))}
+					{
+						!items.length
+							? <MenuItem primaryText="Ничего не найдено" />
+							: items.map( item => (
+								<MenuItem
+									key={item.id}
+									primaryText={item.name}
+									style={item.selectedStatus ? {color: "#00bdd5"} : {}}
+									onTouchTap={() => this.props.onItemSelect(item)}
+								/>
+							))
+					}
 				</Menu>
 			</Popover>
 		</div>
@@ -75,9 +79,30 @@ export default class DropDownMenu extends Component {
 	}
 }
 
+
 DropDownMenu.propTypes = {
 	label: PropTypes.string.isRequired,
-	itemsList: PropTypes.array.isRequired,
 	onItemSelect: PropTypes.func.isRequired,
-	onSearch: PropTypes.func.isRequired
+	onSearch: PropTypes.func.isRequired,
+
+	itemsList: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
+		if (
+			propValue[key]['name'] === undefined ||
+			propValue[key]['id'] === undefined ||
+			propValue[key]['selectedStatus'] === undefined
+		) {
+			return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Validation failed.`);
+		}
+	})
+};
+
+DropDownMenu.defaultProps = {
+	label: "Список",
+	itemsList: [{
+		name: "Ничего не найдено",
+		id: 0,
+		selectedStatus: false
+	}],
+	onItemSelect: () => {},
+	onSearch: () => {}
 };
