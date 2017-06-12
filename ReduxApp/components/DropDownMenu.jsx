@@ -1,10 +1,10 @@
-import	React								from 'react';
-import	{ Component }						from 'react';
-import	MenuItem							from 'material-ui/MenuItem';
-import	PropTypes							from 'prop-types';
-import	TextField							from 'material-ui/TextField';
-import	Popover								from 'material-ui/Popover';	
-import	Menu								from 'material-ui/Menu';
+import React								from 'react';
+import { Component }						from 'react';
+import MenuItem								from 'material-ui/MenuItem';
+import PropTypes							from 'prop-types';
+import TextField							from 'material-ui/TextField';
+import Popover								from 'material-ui/Popover';	
+import Menu									from 'material-ui/Menu';
 
 
 export default class DropDownMenu extends Component {
@@ -24,22 +24,22 @@ export default class DropDownMenu extends Component {
 		this.setState({
 			open: true,
 			anchorEl: event.currentTarget
-		})
-	};
+		});
+	}
 
 	onPopoverClose = () => {
 		this.setState({
 			open: false,
 			inputText: ''
 		});
-		this.props.onSearch('')
-	};
+		this.props.onSearch('');
+	}
 
 	onSearch = event => {
 		this.setState({
 			inputText: event.target.value
-		})
-		this.props.onSearch(event.target.value)
+		});
+		this.props.onSearch(event.target.value);
 	}
 
 	render() {

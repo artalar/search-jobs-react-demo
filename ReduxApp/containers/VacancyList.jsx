@@ -1,100 +1,73 @@
-import React, { Component } from 'react';
-import VacancyCard from './VacancyCard.js';
-import EmptySearch from './EmptySearch.js';
-import CircularProgress from 'material-ui/CircularProgress';
-import SearchField from 'material-ui/TextField';
-import Snackbar from 'material-ui/Snackbar';
+import React								from 'react';
+import { Component }						from 'react';
+import PropTypes							from 'prop-types';
+import CircularProgress						from 'material-ui/CircularProgress';
+import SearchField							from 'material-ui/TextField';
+import Snackbar								from 'material-ui/Snackbar';
+
+import { WEB_REQ_STATUS }					from '../constants';
+
+import VacancyCard							from '../components/VacancyCard.jsx';
+import EmptySearch							from '../components/EmptySearch.jsx';
+
+import { localSearch }						from '../actions'
+
 
 export default class VacancyList extends Component {
-	constructor(data) {
-		
-		super(data);
-		this.props.remoteSearch.do = this.remoteSearch;
-		this.updateState = this.updateState.bind(this);
-		this.remoteSearch = this.remoteSearch.bind(this);
-		this.handleSearch = this.handleSearch.bind(this);
+	constructor() {
+		super();
+
 		this.state = {
-			loadBar: true,
-			displayedVacancy: false,
-			loadVacancy: false,
 			SnackbarStatus: false,
 			SearchCount: '0',
 		};
 	};
-	componentDidMount(){
-		this.remoteSearch()
+	componentDidMount() {
+		const rs = this.props.remoteSearch
+		setTimeout(()=>rs(), 1000)
 	};
-	remoteSearch = () => {
-		let updateState = this.updateState,
-			url = this.props.getURL(),
-			emptyResult = {
-				loadBar: false,
-				loadVacancy: [],
-				displayedVacancy: [],
-				SnackbarStatus: true,
-				SearchCount: [].length
-			};
-		updateState({loadBar: true});
-		if(!url.match('area')){
-			updateState(emptyResult);
-			return;
-		}
-		fetch(url)
-			.then((resp) => resp.json())
-			.then(function(data) {
-				if('errors' in data){
-					console.log(data);
-					updateState(emptyResult);
-					return;
-				}
-				updateState({
-					loadBar: false,
-					loadVacancy: data.items,
-					displayedVacancy: data.items,
-					SnackbarStatus: true,
-					SearchCount: data.items.length
-				});
-			})
-			.catch(function(error) {
-				console.log(error);
-				return undefined;
-		});
-	};
-	handleSearch = function(event) {
-		let searchQuery = event.target.value.toLowerCase(), displayedVacancy;
-		if(!searchQuery) {
+
+	handleSearch = event => {
+		const	searchQuery = event.target.value.toLowerCase();
+		let		displayedVacancies;
+
+		if ( !searchQuery ) {
+			this.props.dispatch( localSearch( this.props.downloadedVacancies ) )
 			this.setState({
-				displayedVacancy: this.state.loadVacancy,
-				SearchCount: this.state.loadVacancy.length
+				SearchCount: this.props.downloadedVacancies.length
 			})
 			return;
 		}
-		displayedVacancy = this.state.loadVacancy.filter(function(el) {
-			let searchValue = el.name.toLowerCase() +
-				'/n' + (el.snippet['responsibility'] ? el.snippet.responsibility.toLowerCase() : '') +
-				'/n' + el.employer.name.toLowerCase();
-			return searchValue.indexOf(searchQuery) !== -1;
-		});
+
+		displayedVacancies = this.props.downloadedVacancies.filter( vacancy => {
+			const searchValue = vacancy.name.toLowerCase() +
+				'/n' + (vacancy.snippet['responsibility'] ? vacancy.snippet.responsibility.toLowerCase() : '') +
+				'/n' + vacancy.employer.name.toLowerCase();
+			return searchValue.indexOf( searchQuery ) !== -1;
+		})
+
+		this.props.dispatch(localSearch( displayedVacancies ))
 
 		this.setState({
-			displayedVacancy: displayedVacancy,
 			SnackbarStatus: true,
-			SearchCount: displayedVacancy.length
+			SearchCount: displayedVacancies.length
 		});
 	};
-	updateState = function(state){
-		this.setState(state);
-	};
-	render = function() {
-		if (this.state.loadBar) return (
-			<div className='LoadBar' style={{textAlign: 'center'}}>
-				<br />
+
+	render() {
+		if ( this.props.loading === WEB_REQ_STATUS.IS_LOADING ) return (
+			<div className='LoadBar' style={{
+				height: "100vh",
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "space-around"
+			}}>
 				<CircularProgress size={100} thickness={10}/>
 			</div>
 		)
-		if(!this.state.loadVacancy.length){
+		if ( !this.props.downloadedVacancies.length ){
 			return (
-				<div className="VacancyList" style={{textAlign: 'center', color: '#AAA', width: '50vw', margin: '0 auto'}}>
+				<div className="VacancyList" style={{textAlign: 'center', color: '#AAA', width: '50vw'}}>
 					<EmptySearch state={true}/>
 					<br/>
 					Ничего не найдено
@@ -102,15 +75,15 @@ export default class VacancyList extends Component {
 			)
 		}
 		return (
-			<div className="VacancyList" style={{width: '50vw', margin: '0 auto'}}>
+			<div className="VacancyList" style={{width: '50vw'}}>
 				<SearchField hintText="Поиск по вакансиям" fullWidth={true} onChange={this.handleSearch}/>
 				<div>
 					{
-						this.state.displayedVacancy.map(function(el) {
+						this.props.displayedVacancies.map( el => {
 							let key = '' + el.alternate_url.match(/\d+/);
 							return (
 								<div key={key}>
-									<VacancyCard data={el} />
+									<VacancyCard info={el} />
 									<br />
 								</div>
 							)
@@ -125,4 +98,10 @@ export default class VacancyList extends Component {
 			</div>
 		);
 	}
+}
+
+VacancyList.propTypes = {
+	downloadedVacancies: PropTypes.array.isRequired,
+	displayedVacancies: PropTypes.array.isRequired,
+	dispatch: PropTypes.func.isRequired
 }

@@ -2,8 +2,12 @@ import { combineReducers }					from 'redux';
 
 import { WEB_REQ_STATUS }					from '../constants';
 
+import { vacancies }						from './vacancies'
 import { filters }							from './filters'
 
+import { UPDATE_DISPLAYED_VACANCIES }		from '../actions';
+import { REQUEST_VACANCIES_SEARCH }			from '../actions';
+import { RESPONSE_VACANCIES_SEARCH }		from '../actions';
 import { CHANGE_SALARY_REQUIRE_STATUS }		from '../actions/filters';
 import { TOGGLE_CITY_SELECTION }			from '../actions/filters/cities';
 import { REQUEST_CITIES_LIST }				from '../actions/filters/cities';
@@ -18,12 +22,10 @@ import { RESPONSE_SPECIALIZATIONS_LIST }	from '../actions/filters/specialization
 
 export const DefaultState = {
 	URL: 'https://api.hh.ru/vacancies?',
-	loadBar: true,
+	loading: WEB_REQ_STATUS.IS_LOADING,
 	localSearchQuere: '',
-	vacanciesList: {
-		loadVacancies: [],
-		displayedVacancies: []
-	},
+	downloadedVacancies: [],
+	displayedVacancies: [],
 	sortings: {},
 	filters: {
 		salaryIsRequired: true,
@@ -80,7 +82,12 @@ const rootReducer = (state = DefaultState, action) => {
 			...state,
 			filters: filters( state.filters, action )
 		}
-	
+		
+		case UPDATE_DISPLAYED_VACANCIES:
+		case REQUEST_VACANCIES_SEARCH:
+		case RESPONSE_VACANCIES_SEARCH:
+		return vacancies( state, action )
+
 		default:
 			return state;
 	}

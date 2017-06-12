@@ -1,23 +1,23 @@
-import	React								from 'react';
-import	{Component}							from 'react';
-import	PropTypes							from 'prop-types';
-import	Drawer								from 'material-ui/Drawer';
-import	AppBar								from 'material-ui/AppBar';
-import	IconButton							from 'material-ui/IconButton';
-import	AcceptFilters						from 'material-ui/svg-icons/action/search';
-import	ClearFilters						from 'material-ui/svg-icons/navigation/close';
-import	FlatButton							from 'material-ui/FlatButton';
-import	Checkbox							from 'material-ui/Checkbox';
+import React								from 'react';
+import {Component}							from 'react';
+import PropTypes							from 'prop-types';
+import Drawer								from 'material-ui/Drawer';
+import AppBar								from 'material-ui/AppBar';
+import IconButton							from 'material-ui/IconButton';
+import AcceptFilters						from 'material-ui/svg-icons/action/search';
+import ClearFilters							from 'material-ui/svg-icons/navigation/close';
+import FlatButton							from 'material-ui/FlatButton';
+import Checkbox								from 'material-ui/Checkbox';
 
-import	DropDownMenu						from '../components/DropDownMenu.jsx';
+import DropDownMenu							from '../components/DropDownMenu.jsx';
 
-import	{ changeSalaryReqStatus }			from '../actions/filters'
-import	{ selectCity }						from '../actions/filters/cities'
-import	{ fetchCitiesList }					from '../actions/filters/cities'
-import	{ selectKeyWord }					from '../actions/filters/keyWords'
-import	{ fetchKeyWordsList }				from '../actions/filters/keyWords'
-import	{ selectSpecialization }			from '../actions/filters/specializations'
-import	{ fetchSpecializationsList }		from '../actions/filters/specializations'
+import { changeSalaryReqStatus }			from '../actions/filters';
+import { selectCity }						from '../actions/filters/cities';
+import { fetchCitiesList }					from '../actions/filters/cities';
+import { selectKeyWord }					from '../actions/filters/keyWords';
+import { fetchKeyWordsList }				from '../actions/filters/keyWords';
+import { selectSpecialization }				from '../actions/filters/specializations';
+import { fetchSpecializationsList }			from '../actions/filters/specializations';
 
 
 export default class Filters extends Component {
@@ -56,7 +56,7 @@ export default class Filters extends Component {
 
 	render() {
 		return (
-		<Drawer>
+		<Drawer width='20%'>
 			<AppBar
 				title="Фильтры"
 				iconElementLeft={<IconButton><ClearFilters /></IconButton>}
