@@ -1,12 +1,12 @@
-import { TOGGLE_KEY_WORD_SELECTION }		from '../index';
-import { REQUEST_KEY_WORDS_LIST }			from '../index';
-import { RESPONSE_KEY_WORDS_LIST }			from '../index';
+export const TOGGLE_KEY_WORD_SELECTION = 'TOGGLE_KEY_WORD_SELECTION';
+export const REQUEST_KEY_WORDS_LIST = 'REQUEST_KEY_WORDS_LIST';
+export const RESPONSE_KEY_WORDS_LIST = 'RESPONSE_KEY_WORDS_LIST';
 
 
-export const selectKeyWord = selectKeyWordId => {
+export const selectKeyWord = selectedKeyWordId => {
 	return {
 		type: TOGGLE_KEY_WORD_SELECTION,
-		selectKeyWordId
+		selectedKeyWordId
 	}
 }
 

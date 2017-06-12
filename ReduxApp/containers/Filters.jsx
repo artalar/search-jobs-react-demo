@@ -4,7 +4,6 @@ import	PropTypes							from 'prop-types';
 import	Drawer								from 'material-ui/Drawer';
 import	AppBar								from 'material-ui/AppBar';
 import	IconButton							from 'material-ui/IconButton';
-//./node_modules/material-ui/svg-icons
 import	AcceptFilters						from 'material-ui/svg-icons/action/search';
 import	ClearFilters						from 'material-ui/svg-icons/navigation/close';
 import	FlatButton							from 'material-ui/FlatButton';
@@ -12,11 +11,13 @@ import	Checkbox							from 'material-ui/Checkbox';
 
 import	DropDownMenu						from '../components/DropDownMenu.jsx';
 
-import { changeSalaryReqStatus }			from '../actions'
-import { selectCity }						from '../actions'
-import { fetchCitiesList }					from '../actions'
-import { selectKeyWord }					from '../actions/filters/keyWords'
-import { fetchKeyWordsList }				from '../actions/filters/keyWords'
+import	{ changeSalaryReqStatus }			from '../actions/filters'
+import	{ selectCity }						from '../actions/filters/cities'
+import	{ fetchCitiesList }					from '../actions/filters/cities'
+import	{ selectKeyWord }					from '../actions/filters/keyWords'
+import	{ fetchKeyWordsList }				from '../actions/filters/keyWords'
+import	{ selectSpecialization }			from '../actions/filters/specializations'
+import	{ fetchSpecializationsList }		from '../actions/filters/specializations'
 
 
 export default class Filters extends Component {
@@ -41,6 +42,14 @@ export default class Filters extends Component {
 		this.props.dispatch( fetchKeyWordsList(str) )
 	}
 
+	onSelectSpecialization = item => {
+		this.props.dispatch( selectSpecialization(item.id) )
+	}
+
+	onSearchSpecializations = str => {
+		this.props.dispatch( fetchSpecializationsList(str) )
+	}
+
 	onSalaryRequiredStatusChange = () => {
 		this.props.dispatch( changeSalaryReqStatus() )
 	}
@@ -61,16 +70,22 @@ export default class Filters extends Component {
 					fullWidth={true} 
 				/>
 				<DropDownMenu
+					label="Города"
+					itemsList={this.props.citiesList}
+					onItemSelect={this.onSelectCity}
+					onSearch={this.onSearchCities}
+				/>
+				<DropDownMenu
 					label="Ключевые слова"
 					itemsList={this.props.keyWordsList}
 					onItemSelect={this.onSelectKeyWord}
 					onSearch={this.onSearchKeyWords}
 				/>
 				<DropDownMenu
-					label="Города"
-					itemsList={this.props.citiesList}
-					onItemSelect={this.onSelectCity}
-					onSearch={this.onSearchCities}
+					label="Специализация"
+					itemsList={this.props.specializationsList}
+					onItemSelect={this.onSelectSpecialization}
+					onSearch={this.onSearchSpecializations}
 				/>
 			</div>
 		</Drawer>);
@@ -80,6 +95,7 @@ export default class Filters extends Component {
 Filters.protoTypes = {
 	citiesList: PropTypes.array.isRequired,
 	keyWordsList: PropTypes.array.isRequired,
+	specializationsList: PropTypes.array.isRequired,
 	salaryIsRequired: PropTypes.bool.isRequired,
 	dispatch: PropTypes.func.isRequired
 }

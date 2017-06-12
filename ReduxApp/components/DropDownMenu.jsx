@@ -13,6 +13,7 @@ export default class DropDownMenu extends Component {
 		super();
 		this.state = {
 			open: false,
+			inputText: ''
 		};
 	}
 
@@ -29,10 +30,15 @@ export default class DropDownMenu extends Component {
 	onPopoverClose = () => {
 		this.setState({
 			open: false,
+			inputText: ''
 		});
+		this.props.onSearch('')
 	};
 
 	onSearch = event => {
+		this.setState({
+			inputText: event.target.value
+		})
 		this.props.onSearch(event.target.value)
 	}
 
@@ -47,6 +53,7 @@ export default class DropDownMenu extends Component {
 			<TextField
 				hintText="Поиск..."
 				floatingLabelText={`${this.props.label}, выбранно: ${count}`}
+				value={this.state.inputText}
 				onClick={this.OnOpenPopover}
 				onChange={this.onSearch}
 				// Disable Popover autofocus when opening
@@ -60,7 +67,7 @@ export default class DropDownMenu extends Component {
 				onRequestClose={this.onPopoverClose}
 				style={{minWidth: '350px'}}
 			>
-				<Menu maxHeight="600">
+				<Menu maxHeight={600}>
 					{
 						!items.length
 							? <MenuItem primaryText="Ничего не найдено" />
