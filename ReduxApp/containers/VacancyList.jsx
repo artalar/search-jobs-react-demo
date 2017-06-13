@@ -100,6 +100,11 @@ export default class VacancyList extends Component {
 	}
 }
 
+VacancyList.defaultProps = {
+	displayedVacancies: [],
+	downloadedVacancies: []
+}
+
 VacancyList.propTypes = {
 	downloadedVacancies: PropTypes.array.isRequired,
 	displayedVacancies: PropTypes.array.isRequired,

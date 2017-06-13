@@ -60,7 +60,7 @@ export default class Filters extends Component {
 			<AppBar
 				title="Фильтры"
 				iconElementLeft={<IconButton><ClearFilters /></IconButton>}
-				iconElementRight={<IconButton><AcceptFilters /></IconButton>}
+				iconElementRight={<IconButton onClick={this.props.remoteSearch} ><AcceptFilters /></IconButton>}
 			/>
 			<div className='filters'>
 				<br/>
@@ -93,6 +93,7 @@ export default class Filters extends Component {
 }
 
 Filters.protoTypes = {
+	remoteSearch: PropTypes.func.isRequired,
 	citiesList: PropTypes.array.isRequired,
 	keyWordsList: PropTypes.array.isRequired,
 	specializationsList: PropTypes.array.isRequired,

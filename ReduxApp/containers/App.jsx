@@ -12,14 +12,14 @@ import { fetchVacanciesSearch }				from '../actions';
 class App extends Component {
 
 	remoteSearch = () => {
-		const url = this.props.URL;
-		this.props.dispatch( fetchVacanciesSearch(url) )
+		this.props.dispatch( fetchVacanciesSearch() )
 	};
 
 	render() {
 		return (
 			<div style={{display: 'flex', justifyContent: 'space-around'}}>
 				<Filters
+					remoteSearch={this.remoteSearch}
 					citiesList={this.props.citiesList}
 					keyWordsList={this.props.keyWordsList}
 					specializationsList={this.props.specializationsList}

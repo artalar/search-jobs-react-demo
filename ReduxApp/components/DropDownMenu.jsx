@@ -49,7 +49,7 @@ export default class DropDownMenu extends Component {
 					, 0
 				);
 		return (
-		<div>
+		<div style={{display: 'flex', justifyContent: 'center'}}>
 			<TextField
 				hintText="Поиск..."
 				floatingLabelText={`${this.props.label}, выбранно: ${count}`}
