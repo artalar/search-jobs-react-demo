@@ -11,7 +11,6 @@ export const cities = ( state, action ) => {
 	switch ( action.type ) {
 
 		case TOGGLE_CITY_SELECTION:
-
 		return {
 			...state,
 			list: state.list.map( city => {
@@ -24,13 +23,11 @@ export const cities = ( state, action ) => {
 			})
 		}
 		case REQUEST_CITIES_LIST:
-
 		return {
 			...state,
 			reqStatus: WEB_REQ_STATUS.IS_LOADING
 		}
 		case RESPONSE_CITIES_LIST:
-
 		if ( action.response['errors'] ) return {
 			...state,
 			list: getUnicItems( state.list, [] ),
@@ -42,6 +39,6 @@ export const cities = ( state, action ) => {
 			reqStatus: WEB_REQ_STATUS.SUCCESS
 		}
 		default:
-			return state;
+		return state;
 	}
 }

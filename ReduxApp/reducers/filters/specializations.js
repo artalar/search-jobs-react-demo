@@ -10,7 +10,6 @@ export const specializations = ( state, action ) => {
 	switch ( action.type ) {
 
 		case TOGGLE_SPECIALIZATION_SELECTION:
-
 		return {
 			...state,
 			list: state.list.map( specialization => {
@@ -23,13 +22,11 @@ export const specializations = ( state, action ) => {
 			})
 		}
 		case REQUEST_SPECIALIZATIONS_LIST:
-
 		return {
 			...state,
 			reqStatus: WEB_REQ_STATUS.IS_LOADING
 		}
 		case RESPONSE_SPECIALIZATIONS_LIST:
-
 		if ( action.response['errors'] ) return {
 			...state,
 			list: getUnicItems( state.list, [] ),
@@ -41,6 +38,6 @@ export const specializations = ( state, action ) => {
 			reqStatus: WEB_REQ_STATUS.SUCCESS
 		}
 		default:
-			return state;
+		return state;
 	}
 }

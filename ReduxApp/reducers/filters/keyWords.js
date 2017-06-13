@@ -11,7 +11,6 @@ export const keyWords = ( state, action ) => {
 	switch ( action.type ) {
 
 		case TOGGLE_KEY_WORD_SELECTION:
-
 		return {
 			...state,
 			list: state.list.map( keyWord => {
@@ -24,7 +23,6 @@ export const keyWords = ( state, action ) => {
 			})
 		}
 		case REQUEST_KEY_WORDS_LIST:
-
 		return {
 			...state,
 			reqStatus: WEB_REQ_STATUS.IS_LOADING
@@ -42,6 +40,6 @@ export const keyWords = ( state, action ) => {
 			reqStatus: WEB_REQ_STATUS.SUCCESS
 		}
 		default:
-			return state;
+		return state;
 	}
 }

@@ -26,7 +26,7 @@ const responseVacanciesSearch = response => {
 export const fetchVacanciesSearch = () => {
 	return ( dispatch, getState ) => {
 		dispatch( requestVacanciesSearch() )
-		const { keyWords, cities, specializations } = getState().filters;
+		const { keyWords, cities, specializations, salaryIsRequired } = getState().filters;
 
 		const URL = getState().URL +
 
@@ -40,8 +40,10 @@ export const fetchVacanciesSearch = () => {
 
 			specializations.list.reduce( (acc, item) => {
 				return item.selectedStatus ? acc+`&specialization=${item.id}` : acc
-			}, '')
-console.log(URL)
+			}, '') +
+
+			( salaryIsRequired ? '&only_with_salary=true' : '' )
+
 		fetch( URL )
 			.then( resp => resp.json() )
 			.then( response => {

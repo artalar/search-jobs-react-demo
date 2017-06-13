@@ -8,6 +8,7 @@ import { filters }							from './filters'
 import { UPDATE_DISPLAYED_VACANCIES }		from '../actions';
 import { REQUEST_VACANCIES_SEARCH }			from '../actions';
 import { RESPONSE_VACANCIES_SEARCH }		from '../actions';
+import { CLEAN_ALL_FILTERS }				from '../actions/filters';
 import { CHANGE_SALARY_REQUIRE_STATUS }		from '../actions/filters';
 import { TOGGLE_CITY_SELECTION }			from '../actions/filters/cities';
 import { REQUEST_CITIES_LIST }				from '../actions/filters/cities';
@@ -64,6 +65,7 @@ export const DefaultState = {
 
 const rootReducer = (state = DefaultState, action) => {
 	switch (action.type) {
+		case CLEAN_ALL_FILTERS:
 		case CHANGE_SALARY_REQUIRE_STATUS:
 
 		case TOGGLE_CITY_SELECTION:
@@ -89,7 +91,7 @@ const rootReducer = (state = DefaultState, action) => {
 		return vacancies( state, action )
 
 		default:
-			return state;
+		return state;
 	}
 }
 

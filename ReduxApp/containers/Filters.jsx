@@ -12,6 +12,7 @@ import Checkbox								from 'material-ui/Checkbox';
 import DropDownMenu							from '../components/DropDownMenu.jsx';
 
 import { changeSalaryReqStatus }			from '../actions/filters';
+import { cleanAllFilters }					from '../actions/filters';
 import { selectCity }						from '../actions/filters/cities';
 import { fetchCitiesList }					from '../actions/filters/cities';
 import { selectKeyWord }					from '../actions/filters/keyWords';
@@ -24,6 +25,10 @@ export default class Filters extends Component {
 
 	constructor(props) {
 		super(props);
+	}
+
+	onRemoveAllFilters = () => {
+		this.props.dispatch( cleanAllFilters() )
 	}
 
 	onSelectCity = item => {
@@ -60,7 +65,9 @@ export default class Filters extends Component {
 			<AppBar
 				title="Фильтры"
 				iconElementLeft={<IconButton><ClearFilters /></IconButton>}
-				iconElementRight={<IconButton onClick={this.props.remoteSearch} ><AcceptFilters /></IconButton>}
+				iconElementRight={<IconButton><AcceptFilters /></IconButton>}
+				onLeftIconButtonTouchTap={this.onRemoveAllFilters}
+				onRightIconButtonTouchTap={this.props.remoteSearch}
 			/>
 			<div className='filters'>
 				<br/>

@@ -1,7 +1,10 @@
+import { DefaultState }						from '../index'
+
 import { cities }							from './cities'
 import { keyWords }							from './keyWords'
 import { specializations }					from './specializations'
 
+import { CLEAN_ALL_FILTERS }				from '../../actions/filters';
 import { CHANGE_SALARY_REQUIRE_STATUS }		from '../../actions/filters';
 import { TOGGLE_CITY_SELECTION }			from '../../actions/filters/cities';
 import { REQUEST_CITIES_LIST }				from '../../actions/filters/cities';
@@ -16,33 +19,37 @@ import { RESPONSE_SPECIALIZATIONS_LIST }	from '../../actions/filters/specializat
 
 export const filters = ( state, action ) => {
 	switch ( action.type ) {
+		case CLEAN_ALL_FILTERS:
+		return {
+			...DefaultState.filters
+		}
 		case CHANGE_SALARY_REQUIRE_STATUS:
-			return {
-				...state,
-				salaryIsRequired: !state.salaryIsRequired
-			}
+		return {
+			...state,
+			salaryIsRequired: !state.salaryIsRequired
+		}
 		case TOGGLE_CITY_SELECTION:
 		case REQUEST_CITIES_LIST:
 		case RESPONSE_CITIES_LIST:
-			return {
-				...state,
-				cities: cities( state.cities, action )
-			}
+		return {
+			...state,
+			cities: cities( state.cities, action )
+		}
 		case TOGGLE_KEY_WORD_SELECTION:
 		case REQUEST_KEY_WORDS_LIST:
 		case RESPONSE_KEY_WORDS_LIST:
-			return {
-				...state,
-				keyWords: keyWords( state.keyWords, action )
-			}
+		return {
+			...state,
+			keyWords: keyWords( state.keyWords, action )
+		}
 		case TOGGLE_SPECIALIZATION_SELECTION:
 		case REQUEST_SPECIALIZATIONS_LIST:
 		case RESPONSE_SPECIALIZATIONS_LIST:
-			return {
-				...state,
-				specializations: specializations( state.specializations, action )
-			}
+		return {
+			...state,
+			specializations: specializations( state.specializations, action )
+		}
 		default:
-			return state
+		return state
 	}
 }
