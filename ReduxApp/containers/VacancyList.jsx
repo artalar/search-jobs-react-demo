@@ -14,18 +14,28 @@ import { localSearch }						from '../actions'
 
 
 export default class VacancyList extends Component {
-	constructor() {
-		super();
-
+	constructor(props) {
+		super(props);
 		this.state = {
 			SnackbarStatus: false,
 			SearchCount: '0',
 		};
 	};
 	componentDidMount() {
-		const rs = this.props.remoteSearch
-		setTimeout(()=>rs(), 1000)
+		this.props.remoteSearch()
 	};
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			SnackbarStatus: this.props.displayedVacancies.length !== nextProps.displayedVacancies.length,
+			SearchCount: nextProps.displayedVacancies.length,
+		})
+	}
+
+	onSnackbarClose = () => {
+		this.setState({
+			SnackbarStatus: false
+		});
+	}
 
 	handleSearch = event => {
 		const	searchQuery = event.target.value.toLowerCase();
@@ -65,18 +75,20 @@ export default class VacancyList extends Component {
 				<CircularProgress size={100} thickness={10}/>
 			</div>
 		)
-		if ( !this.props.downloadedVacancies.length ){
-			return (
-				<div className="VacancyList" style={{textAlign: 'center', color: '#AAA', width: '50vw'}}>
-					<EmptySearch state={true}/>
-					<br/>
-					Ничего не найдено
-				</div>
-			)
-		}
+		if ( !this.props.downloadedVacancies.length ) return (
+			<div className="VacancyList" style={{textAlign: 'center', color: '#AAA', width: '50vw'}}>
+				<EmptySearch state={true}/>
+				<br/>
+				Ничего не найдено
+			</div>
+		)
 		return (
 			<div className="VacancyList" style={{width: '50vw'}}>
-				<SearchField hintText="Поиск по вакансиям" fullWidth={true} onChange={this.handleSearch}/>
+				<SearchField
+					hintText="Поиск по вакансиям"
+					fullWidth={true}
+					onChange={this.handleSearch}
+				/>
 				<div>
 					{
 						this.props.displayedVacancies.map( el => {
@@ -93,6 +105,7 @@ export default class VacancyList extends Component {
 						open={this.state.SnackbarStatus}
 						message={"Найдено: " + this.state.SearchCount}
 						autoHideDuration={2000}
+						onRequestClose={this.onSnackbarClose}
 					/>
 				</div>
 			</div>

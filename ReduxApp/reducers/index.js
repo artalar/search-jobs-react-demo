@@ -29,7 +29,7 @@ export const DefaultState = {
 	displayedVacancies: [],
 	sortings: {},
 	filters: {
-		salaryIsRequired: true,
+		salaryIsRequired: false,
 		cities: {
 			URL: 'https://api.hh.ru/suggests/areas?text=',
 			list: [
