@@ -1,0 +1,5 @@
+export const WEB_REQ_STATUS = {
+	SUCCESS: 200,
+	IS_LOADING: 102,
+	ERROR: 500
+}

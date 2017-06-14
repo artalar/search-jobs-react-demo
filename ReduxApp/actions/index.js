@@ -1,34 +1,56 @@
-export const localSearch = event => {
+export const UPDATE_DISPLAYED_VACANCIES = 'UPDATE_DISPLAYED_VACANCIES';
+export const REQUEST_VACANCIES_SEARCH = 'REQUEST_VACANCIES_SEARCH';
+export const RESPONSE_VACANCIES_SEARCH = 'RESPONSE_VACANCIES_SEARCH';
+
+
+export const localSearch = displayedVacancies => {
 	return {
-		type: 'SEARCH_LOCALLY',
-		searchQuery: event.target.value.toLowerCase()
+		type: UPDATE_DISPLAYED_VACANCIES,
+		displayedVacancies
 	}
 }
 
-
-function networkReq() { //activate loadbar
+const requestVacanciesSearch = () => {
 	return {
-		type: 'SEND_NETWORK_REQUEST'
+		type: REQUEST_VACANCIES_SEARCH
 	}
 }
 
-
-function networkResp(json) {
+const responseVacanciesSearch = response => {
 	return {
-		type: 'PARSE_NETWORK_RESPONSE',
-		json
+		type: RESPONSE_VACANCIES_SEARCH,
+		response
 	}
 }
 
+export const fetchVacanciesSearch = () => {
+	return ( dispatch, getState ) => {
+		dispatch( requestVacanciesSearch() )
+		const { keyWords, cities, specializations, salaryIsRequired } = getState().filters;
 
-export const remoteSearch = url => {
-	return dispatch => {
-		
-		dispatch(networkReq());
-		
-		return fetch(url)
-			.then(resp => resp.json())
-			.then(json => dispatch(networkResp(json)))
-			.catch(error => dispatch(networkResp(error)))
+		const URL = getState().URL +
+
+			keyWords.list.reduce( (acc, item) => {
+				return item.selectedStatus ? `${acc.length > 5 ? acc + '+OR+' : acc}${item.id}` : acc
+			}, 'text=') +
+
+			cities.list.reduce( (acc, item) => {
+				return item.selectedStatus ? acc+`&area=${item.id}` : acc
+			}, '') +
+
+			specializations.list.reduce( (acc, item) => {
+				return item.selectedStatus ? acc+`&specialization=${item.id}` : acc
+			}, '') +
+
+			( salaryIsRequired ? '&only_with_salary=true' : '' )
+
+		fetch( URL )
+			.then( resp => resp.json() )
+			.then( response => {
+				dispatch( responseVacanciesSearch( response ) )
+			})
+			.catch( error => {
+				dispatch( responseVacanciesSearch( error ) )
+		});
 	}
 }
