@@ -14,8 +14,9 @@ npm i
 npm start
 ```
 
-## Features
+## TODO
 
+* Pagination
 * More filters
 * Add sortings
 * Filters autosave (store -> localStorage)
