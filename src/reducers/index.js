@@ -36,17 +36,12 @@ export const DefaultState = {
 				{
 					id: 1,
 					name: "Москва",
-					selectedStatus: false
+					selectedStatus: true
 				},
 				{
 					id: 2,
 					name: "Санкт-Петербург",
 					selectedStatus: false
-				},
-				{
-					id: 43,
-					name: "Калуга",
-					selectedStatus: true
 				},
 			],
 			reqStatus: WEB_REQ_STATUS.IS_LOADING
@@ -84,7 +79,7 @@ const rootReducer = (state = DefaultState, action) => {
 			...state,
 			filters: filters( state.filters, action )
 		}
-		
+
 		case UPDATE_DISPLAYED_VACANCIES:
 		case REQUEST_VACANCIES_SEARCH:
 		case RESPONSE_VACANCIES_SEARCH:

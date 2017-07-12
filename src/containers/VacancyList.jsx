@@ -95,7 +95,13 @@ export default class VacancyList extends Component {
 							let key = '' + el.alternate_url.match(/\d+/);
 							return (
 								<div key={key}>
-									<VacancyCard info={el} />
+									<VacancyCard
+										info={el}
+										{...{
+											params: 'params',
+											qqq: 'qqq'
+										}}
+									/>
 									<br />
 								</div>
 							)

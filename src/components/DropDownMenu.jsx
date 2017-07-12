@@ -62,7 +62,7 @@ export default class DropDownMenu extends Component {
 			<Popover
 				open={this.state.open}
 				anchorEl={this.state.anchorEl}
-				anchorOrigin={{horizontal: 'middle', vertical: 'bottom'}}
+				anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
 				targetOrigin={{horizontal: 'left', vertical: 'top'}}
 				onRequestClose={this.onPopoverClose}
 				style={{minWidth: '350px'}}
@@ -85,23 +85,17 @@ export default class DropDownMenu extends Component {
 		</div>
 		);
 	}
-}
-
+};
 
 DropDownMenu.propTypes = {
 	label: PropTypes.string.isRequired,
 	onItemSelect: PropTypes.func.isRequired,
 	onSearch: PropTypes.func.isRequired,
-
-	itemsList: PropTypes.arrayOf((propValue, key, componentName, location, propFullName) => {
-		if (
-			propValue[key]['name'] === undefined ||
-			propValue[key]['id'] === undefined ||
-			propValue[key]['selectedStatus'] === undefined
-		) {
-			return new Error(`Invalid prop ${propFullName} supplied to ${componentName}. Validation failed.`);
-		}
-	})
+	itemsList: PropTypes.arrayOf(PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		id: PropTypes.number.isRequired,
+		selectedStatus: PropTypes.bool,
+	})).isRequired
 };
 
 DropDownMenu.defaultProps = {
