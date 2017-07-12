@@ -1,4 +1,5 @@
 import React								from 'react';
+import { Component }								from 'react';
 import PropTypes							from 'prop-types';
 import { CardHeader }						from 'material-ui/Card';
 import { CardActions }						from 'material-ui/Card';
@@ -13,11 +14,10 @@ import ActionFavoriteBorder					from 'material-ui/svg-icons/action/favorite-bord
 
 import logo								from '../src/hh_2015.jpg'
 
-export default class VacancyCard extends React.Component {
+export default class VacancyCard extends Component {
 
 	constructor( props ) {
 		super( props );
-
 		this.state = {
 			info: this.convertResponseInfo( this.props.info ),
 			likeStatus: !!localStorage.getItem( this.props.info.alternate_url )

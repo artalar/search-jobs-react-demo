@@ -28,6 +28,7 @@ export default class Filters extends Component {
 	}
 
 	onRemoveAllFilters = () => {
+		this.props.changeOpenStatus()
 		this.props.dispatch( cleanAllFilters() )
 	}
 
@@ -61,8 +62,14 @@ export default class Filters extends Component {
 
 	render() {
 		return (
-		<Drawer width='20%'>
+		<Drawer
+			width={350}
+			open={this.props.isOpen}
+			onRequestChange={this.props.changeOpenStatus}
+			docked={false}
+		>
 			<AppBar
+				style={{textAlign: 'center', marginTop: '8px'}}
 				title="Фильтры"
 				iconElementLeft={<IconButton><ClearFilters /></IconButton>}
 				iconElementRight={<IconButton><AcceptFilters /></IconButton>}
@@ -74,7 +81,9 @@ export default class Filters extends Component {
 				<FlatButton
 					label={this.props.salaryIsRequired ? 'Только с указанием з.п.' : 'Без указания з.п.'}
 					onTouchTap={this.onSalaryRequiredStatusChange}
-					fullWidth={true} 
+					fullWidth={true}
+					hoverColor="hsla(187, 50%, 70%, 0.3)"
+					rippleColor="hsla(187, 50%, 30%, 0.3)"
 				/>
 				<DropDownMenu
 					label="Города"
@@ -105,5 +114,7 @@ Filters.protoTypes = {
 	keyWordsList: PropTypes.array.isRequired,
 	specializationsList: PropTypes.array.isRequired,
 	salaryIsRequired: PropTypes.bool.isRequired,
+	isOpen: PropTypes.bool.isRequired,
+	changeOpenStatus: PropTypes.func.isRequired,
 	dispatch: PropTypes.func.isRequired
 }
