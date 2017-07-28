@@ -63,7 +63,7 @@ export default class Filters extends Component {
 	render() {
 		return (
 		<Drawer
-			width={350}
+			width={300}
 			open={this.props.isOpen}
 			onRequestChange={this.props.changeOpenStatus}
 			docked={false}

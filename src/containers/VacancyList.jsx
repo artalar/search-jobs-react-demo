@@ -76,14 +76,14 @@ export default class VacancyList extends Component {
 			</div>
 		)
 		if ( !this.props.downloadedVacancies.length ) return (
-			<div className="VacancyList" style={{textAlign: 'center', color: '#AAA', width: '50vw'}}>
+			<div style={{textAlign: 'center', color: '#AAA', width: '90vmin'}}>
 				<EmptySearch state={true}/>
 				<br/>
 				Ничего не найдено
 			</div>
 		)
 		return (
-			<div className="VacancyList" style={{width: '50vw'}}>
+			<div style={{width: '90vmin'}}>
 				<SearchField
 					hintText="Поиск по вакансиям"
 					fullWidth={true}
